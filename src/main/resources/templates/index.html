@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>俺家 - お客様システム</title>
+    <link rel="stylesheet" href="../static/resources/style.css" th:href="@{/resources/style.css}">
+</head>
+<body>
+<h1><span sec:authentication="principal.username">店舗名</span> - メニューを選択してください</h1>
+<form th:action="@{/goods/order}" action="orderComplete.html" method="post">
+    <table border="1">
+        <tr>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>カテゴリ</th>
+            <th>数量</th>
+        </tr>
+        <tr th:each="goods : ${goodsList}" th:object="${goods}">
+            <td th:text="*{name}">らーめん</td>
+            <td th:text="*{price}">価格</td>
+            <td th:text="*{category.name}">カテゴリ</td>
+            <td>
+                <select th:name="*{'goodsId_' + id}">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="注文確定">
+</form>
+<form method="post" th:action="@{/logout}" action="login.html">
+    <input type="submit" value="ログアウト">
+</form>
+</body>
+</html>
